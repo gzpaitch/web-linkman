@@ -31,7 +31,7 @@ function ApiStatusIndicator() {
 
   return (
     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-xs font-medium">
-      <span 
+      <span
         className={cn(
           'h-2 w-2 rounded-full',
           health.isLoading && 'bg-zinc-400 animate-pulse',
@@ -50,16 +50,13 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:border-zinc-800 dark:bg-zinc-950/95">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/95 backdrop-blur supports-backdrop-filter:bg-white/80 dark:border-zinc-800 dark:bg-zinc-950/95">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 dark:bg-zinc-100">
               <Link2 className="h-4 w-4 text-white dark:text-zinc-900" />
             </div>
-            <span className="font-semibold text-zinc-900 dark:text-zinc-100">
-              LinkTree Scraper
-            </span>
           </Link>
 
           <nav className="flex items-center gap-1">

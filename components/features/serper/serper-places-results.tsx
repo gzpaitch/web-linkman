@@ -1,7 +1,8 @@
 'use client';
 
 import type { SerperPlace } from '@/types';
-import { MapPin, Phone, Star, ExternalLink, Copy, Check } from 'lucide-react';
+import { sendLinkPlacesWebhook } from '@/lib/api';
+import { MapPin, Phone, Star, ExternalLink, Copy, Check, Send, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
 interface SerperPlacesResultsProps {
@@ -11,11 +12,37 @@ interface SerperPlacesResultsProps {
 function PlaceCard({ place }: { place: SerperPlace }) {
   const hasWebsite = !!place.website;
   const [copied, setCopied] = useState(false);
+  const [webhookState, setWebhookState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const sendToWebhook = async () => {
+    setWebhookState('loading');
+    
+    const result = await sendLinkPlacesWebhook({
+      cid: place.cid,
+      title: place.title,
+      address: place.address,
+      category: place.category,
+      phoneNumber: place.phoneNumber,
+      website: place.website,
+      rating: place.rating,
+      ratingCount: place.ratingCount,
+      latitude: place.latitude,
+      longitude: place.longitude,
+    });
+
+    if (result.success) {
+      setWebhookState('success');
+      setTimeout(() => setWebhookState('idle'), 2000);
+    } else {
+      setWebhookState('error');
+      setTimeout(() => setWebhookState('idle'), 3000);
+    }
   };
 
   return (
@@ -76,6 +103,40 @@ function PlaceCard({ place }: { place: SerperPlace }) {
             </button>
           </div>
         )}
+
+        {/* Send to Webhook Button */}
+        <button
+          onClick={sendToWebhook}
+          disabled={webhookState === 'loading'}
+          className={`w-full mt-4 flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            webhookState === 'success'
+              ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+              : webhookState === 'error'
+              ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+              : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
+          } disabled:opacity-50`}
+        >
+          {webhookState === 'loading' ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Sending...
+            </>
+          ) : webhookState === 'success' ? (
+            <>
+              <Check className="h-4 w-4" />
+              Sent!
+            </>
+          ) : webhookState === 'error' ? (
+            <>
+              Error - Try again
+            </>
+          ) : (
+            <>
+              <Send className="h-4 w-4" />
+              Send to Webhook
+            </>
+          )}
+        </button>
       </div>
     </div>
   );
