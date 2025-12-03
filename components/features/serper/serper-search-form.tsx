@@ -84,7 +84,7 @@ export function SerperSearchForm({ onSubmit, isLoading }: SerperSearchFormProps)
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
                 Search Mode
@@ -110,7 +110,7 @@ export function SerperSearchForm({ onSubmit, isLoading }: SerperSearchFormProps)
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
                 Country

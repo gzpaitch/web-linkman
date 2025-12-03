@@ -183,21 +183,21 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
           </div>
         )}
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {/* Header */}
-          <div className="mb-6">
-            <div className="flex items-start justify-between gap-4">
-              <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
+          <div className="mb-4 sm:mb-6">
+            <div className="flex items-start justify-between gap-2 sm:gap-4">
+              <h1 className="text-xl sm:text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
                 {place.name}
               </h1>
               <CopyButton text={place.name} field="Name" />
             </div>
             {place.rating && (
               <div className="flex items-center gap-2 mt-2">
-                <Star className="h-5 w-5 text-zinc-400" />
-                <span className="font-medium text-zinc-900 dark:text-zinc-100">{place.rating}</span>
+                <Star className="h-4 sm:h-5 w-4 sm:w-5 text-zinc-400" />
+                <span className="font-medium text-zinc-900 dark:text-zinc-100 text-sm sm:text-base">{place.rating}</span>
                 {place.reviews && (
-                  <span className="text-zinc-500">({place.reviews.length} reviews)</span>
+                  <span className="text-zinc-500 text-sm">({place.reviews.length} reviews)</span>
                 )}
               </div>
             )}
@@ -206,28 +206,28 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
           {/* Copy Summary Button */}
           <button
             onClick={() => copyToClipboard(formatSummary(), 'Summary')}
-            className="w-full mb-6 flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors"
+            className="w-full mb-4 sm:mb-6 flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors text-sm sm:text-base"
           >
             <Copy className="h-4 w-4" />
             Copy Summary
           </button>
 
           {/* Details */}
-          <div className="space-y-4 mb-6">
+          <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
             {/* Address */}
-            <div className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-zinc-400 mt-0.5 shrink-0" />
-              <span className="flex-1 text-zinc-600 dark:text-zinc-400">{place.address}</span>
+            <div className="flex items-start gap-2 sm:gap-3">
+              <MapPin className="h-4 sm:h-5 w-4 sm:w-5 text-zinc-400 mt-0.5 shrink-0" />
+              <span className="flex-1 text-zinc-600 dark:text-zinc-400 text-sm sm:text-base">{place.address}</span>
               <CopyButton text={place.address} field="Address" />
             </div>
 
             {/* Phone */}
             {place.phone && (
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-zinc-400 shrink-0" />
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Phone className="h-4 sm:h-5 w-4 sm:w-5 text-zinc-400 shrink-0" />
                 <a
                   href={`tel:${place.phone}`}
-                  className="flex-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+                  className="flex-1 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 text-sm sm:text-base"
                 >
                   {place.phone}
                 </a>
@@ -237,9 +237,9 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
 
             {/* Opening Hours */}
             {place.openingHours?.weekday_text && (
-              <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-zinc-400 mt-0.5 shrink-0" />
-                <div className="flex-1 text-sm text-zinc-600 dark:text-zinc-400">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <Clock className="h-4 sm:h-5 w-4 sm:w-5 text-zinc-400 mt-0.5 shrink-0" />
+                <div className="flex-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
                   {place.openingHours.weekday_text.map((line, idx) => (
                     <div key={idx}>{line}</div>
                   ))}
@@ -254,17 +254,17 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
 
           {/* Website */}
           {place.website && (
-            <div className="flex items-center gap-3 p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100 dark:border-zinc-700/50">
+            <div className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-100 dark:border-zinc-700/50">
               <Globe className="h-5 w-5 text-zinc-400 shrink-0" />
               <a
                 href={place.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="min-w-0 flex-1 text-zinc-900 dark:text-zinc-100 hover:underline font-medium truncate"
+                className="min-w-0 flex-1 text-zinc-900 dark:text-zinc-100 hover:underline font-medium text-sm sm:text-base truncate"
               >
                 {place.website}
               </a>
-              <ExternalLink className="h-4 w-4 text-zinc-400 shrink-0" />
+              <ExternalLink className="h-4 w-4 text-zinc-400 shrink-0 hidden sm:block" />
               <CopyButton text={place.website} field="Website" />
             </div>
           )}
@@ -274,8 +274,8 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
       {/* Reviews */}
       {place.reviews && place.reviews.length > 0 && (
         <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-          <div className="p-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
-            <h2 className="font-medium text-zinc-900 dark:text-zinc-100">
+          <div className="p-3 sm:p-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between gap-2">
+            <h2 className="font-medium text-zinc-900 dark:text-zinc-100 text-sm sm:text-base">
               Reviews ({place.reviews.length})
             </h2>
             <button
@@ -285,7 +285,7 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
                 ).join(' | \n');
                 copyToClipboard(reviewsText, 'Reviews');
               }}
-              className="text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 flex items-center gap-1"
+              className="text-xs sm:text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 flex items-center gap-1 shrink-0"
             >
               <Copy className="h-3 w-3" />
               Copy All
@@ -293,13 +293,13 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
           </div>
           <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
             {place.reviews.slice(0, 5).map((review, idx) => (
-              <div key={idx} className="p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-zinc-900 dark:text-zinc-100">
+              <div key={idx} className="p-3 sm:p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 mb-2">
+                  <span className="font-medium text-zinc-900 dark:text-zinc-100 text-sm sm:text-base">
                     {review.author}
                   </span>
                   <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1 text-sm text-zinc-500">
+                    <div className="flex items-center gap-1 text-xs sm:text-sm text-zinc-500">
                       <Star className="h-4 w-4" />
                       {review.rating}
                     </div>
@@ -309,7 +309,7 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
                     />
                   </div>
                 </div>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
                   {review.text}
                 </p>
               </div>
@@ -328,7 +328,7 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
           </div>
 
           {/* Batch Upload Controls */}
-          <div className="p-4 bg-zinc-50 dark:bg-zinc-800/50 border-b border-zinc-100 dark:border-zinc-800">
+          <div className="p-3 sm:p-4 bg-zinc-50 dark:bg-zinc-800/50 border-b border-zinc-100 dark:border-zinc-800">
             <h3 className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
               Upload to S3
             </h3>
@@ -337,19 +337,19 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
               <button
                 onClick={selectAllPhotos}
                 disabled={batchState.isUploading}
-                className="px-3 py-1.5 text-sm rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-50"
+                className="px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-50"
               >
                 Select All ({place.photos.length})
               </button>
               <button
                 onClick={deselectAllPhotos}
                 disabled={batchState.isUploading}
-                className="px-3 py-1.5 text-sm rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-50"
+                className="px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 disabled:opacity-50"
               >
                 Deselect All
               </button>
               {batchState.selectedPhotos.size > 0 && (
-                <span className="text-sm text-zinc-500">
+                <span className="text-xs sm:text-sm text-zinc-500">
                   {batchState.selectedPhotos.size} selected
                 </span>
               )}
@@ -377,9 +377,9 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
 
             {/* Upload Results */}
             {batchState.results && (
-              <div className="mt-4 p-4 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
+              <div className="mt-4 p-3 sm:p-4 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-medium text-zinc-900 dark:text-zinc-100">
+                  <h4 className="font-medium text-sm sm:text-base text-zinc-900 dark:text-zinc-100">
                     Upload Results
                   </h4>
                   <button
@@ -390,7 +390,7 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
                   </button>
                 </div>
 
-                <div className="text-sm text-zinc-500 mb-3">
+                <div className="text-xs sm:text-sm text-zinc-500 mb-3">
                   Total: {batchState.results.successful.length + batchState.results.failed.length} | 
                   Success: {batchState.results.successful.length} | 
                   Failed: {batchState.results.failed.length}
@@ -398,14 +398,14 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
 
                 {batchState.results.successful.length > 0 && (
                   <div className="mb-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between mb-2">
+                      <span className="text-xs sm:text-sm font-medium text-green-600 dark:text-green-400 flex items-center gap-1">
                         <CheckCircle className="h-4 w-4" />
                         Successful ({batchState.results.successful.length})
                       </span>
                       <button
                         onClick={copyAllUrls}
-                        className="px-3 py-1 text-xs font-medium rounded-md bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200"
+                        className="px-3 py-1 text-xs font-medium rounded-md bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 w-fit"
                       >
                         {allUrlsCopied ? 'Copied!' : `Copy All (${batchState.results.successful.length})`}
                       </button>
@@ -417,12 +417,12 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
                             type="text"
                             value={result.uploadedUrl}
                             readOnly
-                            className="flex-1 px-2 py-1 text-xs font-mono bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded text-green-700 dark:text-green-300"
+                            className="flex-1 min-w-0 px-2 py-1 text-xs font-mono bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded text-green-700 dark:text-green-300"
                             onClick={(e) => (e.target as HTMLInputElement).select()}
                           />
                           <button
                             onClick={() => copyToClipboard(result.uploadedUrl, `URL ${idx + 1}`)}
-                            className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded"
+                            className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded shrink-0"
                           >
                             <Copy className="h-3 w-3 text-zinc-400" />
                           </button>
@@ -451,8 +451,8 @@ export function GPlacesDetailsView({ place, onBack }: GPlacesDetailsProps) {
           </div>
 
           {/* Photos Grid */}
-          <div className="p-4">
-            <div className="grid grid-cols-3 gap-2">
+          <div className="p-3 sm:p-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {place.photos.map((photo, idx) => {
                 const photoUrl = photo.url || getPhotoUrl(photo.reference, 400);
                 const isSelected = batchState.selectedPhotos.has(idx);

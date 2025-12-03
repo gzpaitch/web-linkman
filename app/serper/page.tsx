@@ -74,21 +74,25 @@ export default function SerperPage() {
 
       {result && (
         <div className="space-y-4">
-          <div className="flex items-center gap-2 text-sm text-zinc-500">
-            <span>Query: &quot;{result.data.searchParameters.q}&quot;</span>
-            {result.data.searchParameters.location && (
-              <Badge variant="secondary">{result.data.searchParameters.location}</Badge>
-            )}
-            <span className="ml-auto">Credits used: {result.data.credits}</span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearResults}
-              className="ml-2 text-zinc-400 hover:text-zinc-600"
-            >
-              <X className="h-4 w-4 mr-1" />
-              Clear
-            </Button>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-sm text-zinc-500">
+            <div className="flex flex-wrap items-center gap-2 min-w-0">
+              <span className="truncate">Query: &quot;{result.data.searchParameters.q}&quot;</span>
+              {result.data.searchParameters.location && (
+                <Badge variant="secondary">{result.data.searchParameters.location}</Badge>
+              )}
+            </div>
+            <div className="flex items-center gap-2 sm:ml-auto shrink-0">
+              <span>Credits: {result.data.credits}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearResults}
+                className="text-zinc-400 hover:text-zinc-600"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Clear
+              </Button>
+            </div>
           </div>
 
           {isPlacesResult(result) ? (

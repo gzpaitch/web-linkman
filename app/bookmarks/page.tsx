@@ -107,7 +107,7 @@ function BookmarkCard({
         )}
 
         {/* Action Buttons */}
-        <div className="flex gap-2 mt-4">
+        <div className="flex flex-col sm:flex-row gap-2 mt-4">
           {/* Remove Button */}
           <button
             onClick={onRemove}
