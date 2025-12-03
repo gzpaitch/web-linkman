@@ -161,3 +161,74 @@ export interface SerperSearchResponse {
   organic: SerperOrganicResult[];
   credits: number;
 }
+
+// GPlaces Types
+export interface GPlacesSearchCandidate {
+  place_id: string;
+  name: string;
+  formatted_address: string;
+  icon: string;
+  types: string[];
+  image?: string;
+}
+
+export interface GPlacesSearchResponse {
+  status: string;
+  query: string;
+  candidates: GPlacesSearchCandidate[];
+}
+
+export interface GPlacesPhoto {
+  reference: string;
+  width: number;
+  height: number;
+  attributions: string[];
+  url?: string;
+}
+
+export interface GPlacesReview {
+  author: string;
+  rating: number;
+  text: string;
+  time: number;
+}
+
+export interface GPlacesOpeningHours {
+  open_now?: boolean;
+  weekday_text?: string[];
+}
+
+export interface GPlacesDetails {
+  id: string;
+  name: string;
+  address: string;
+  rating?: number;
+  phone?: string;
+  website?: string;
+  openingHours?: GPlacesOpeningHours;
+  types?: string[];
+  vicinity?: string;
+  photos?: GPlacesPhoto[];
+  reviews?: GPlacesReview[];
+}
+
+// Storage Types (S3)
+export interface UploadOptions {
+  folder?: string;
+  filename?: string;
+}
+
+export interface UploadResult {
+  success: boolean;
+  url?: string;
+  path?: string;
+  error?: string;
+}
+
+export interface StorageFileInfo {
+  name: string;
+  path: string;
+  url: string;
+  size?: number;
+  lastModified?: string;
+}

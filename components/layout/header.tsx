@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { Link2, Instagram, Search } from 'lucide-react';
+import { Link2, Instagram, Search, MapPin } from 'lucide-react';
 import { useApiState } from '@/hooks';
 import { getHealth } from '@/lib/api';
 
@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { href: '/', label: 'Scraper', icon: Link2 },
   { href: '/instagram', label: 'Instagram', icon: Instagram },
   { href: '/serper', label: 'Serper', icon: Search },
+  { href: '/gplaces', label: 'GPlaces', icon: MapPin },
 ];
 
 function ApiStatusIndicator() {

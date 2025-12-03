@@ -15,6 +15,10 @@ function formatCount(count: number): string {
   return count.toString();
 }
 
+function proxyImageUrl(url: string): string {
+  return `/api/proxy/image?url=${encodeURIComponent(url)}`;
+}
+
 function PostCard({ post }: { post: IgPostInfo }) {
   return (
     <a
@@ -25,7 +29,7 @@ function PostCard({ post }: { post: IgPostInfo }) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={post.media_url}
+        src={proxyImageUrl(post.media_url)}
         alt={post.caption || 'Instagram post'}
         className="h-full w-full object-cover transition-transform group-hover:scale-105"
       />
