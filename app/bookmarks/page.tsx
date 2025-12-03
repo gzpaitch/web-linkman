@@ -7,11 +7,11 @@ import { MapPin, Phone, Star, ExternalLink, Copy, Check, Send, Loader2, Bookmark
 import { useState } from 'react';
 import type { SerperPlace } from '@/types';
 
-function BookmarkCard({ 
-  place, 
-  onRemove 
-}: { 
-  place: SerperPlace; 
+function BookmarkCard({
+  place,
+  onRemove
+}: {
+  place: SerperPlace;
   onRemove: () => void;
 }) {
   const [copied, setCopied] = useState(false);
@@ -25,7 +25,7 @@ function BookmarkCard({
 
   const sendToWebhook = async () => {
     setWebhookState('loading');
-    
+
     const result = await sendLinkPlacesWebhook({
       cid: place.cid,
       title: place.title,
@@ -67,14 +67,14 @@ function BookmarkCard({
             <MapPin className="h-4 w-4 text-zinc-400 mt-0.5 shrink-0" />
             <span className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base break-words min-w-0">{place.address}</span>
           </div>
-          
+
           {place.phoneNumber && (
             <div className="flex items-center gap-2 sm:gap-3">
               <Phone className="h-4 w-4 text-zinc-400 shrink-0" />
               <span className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base">{place.phoneNumber}</span>
             </div>
           )}
-          
+
           {place.rating && (
             <div className="flex items-center gap-2 sm:gap-3">
               <Star className="h-4 w-4 text-zinc-400 shrink-0" />
@@ -113,7 +113,7 @@ function BookmarkCard({
             onClick={onRemove}
             variant="destructive"
             size="lg"
-            className="w-full sm:flex-1"
+            className="w-full sm:flex-1 !bg-red-100 !text-red-600 hover:!bg-red-200 dark:!bg-red-900/20 dark:!text-red-400 dark:hover:!bg-red-900/30"
           >
             <Trash2 className="h-5 w-5" />
             Remove
@@ -124,13 +124,12 @@ function BookmarkCard({
             disabled={webhookState === 'loading'}
             variant="secondary"
             size="lg"
-            className={`w-full sm:flex-1 ${
-              webhookState === 'success'
+            className={`w-full sm:flex-1 ${webhookState === 'success'
                 ? '!bg-green-100 !text-green-700 dark:!bg-green-900/30 dark:!text-green-400'
                 : webhookState === 'error'
-                ? '!bg-red-100 !text-red-700 dark:!bg-red-900/30 dark:!text-red-400'
-                : ''
-            }`}
+                  ? '!bg-red-100 !text-red-700 dark:!bg-red-900/30 dark:!text-red-400'
+                  : ''
+              }`}
           >
             {webhookState === 'loading' ? (
               <>
@@ -179,7 +178,7 @@ export default function BookmarksPage() {
             {bookmarks.length} saved place{bookmarks.length !== 1 ? 's' : ''}
           </p>
         </div>
-        
+
         {bookmarks.length > 0 && (
           <Button
             onClick={clearBookmarks}

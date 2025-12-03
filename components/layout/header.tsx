@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
-import { Link2, Instagram, Search, MapPin, Bookmark, Menu, X } from 'lucide-react';
+import { Link2, Instagram, Search, MapPin, Bookmark, Menu } from 'lucide-react';
 import { useApiState } from '@/hooks';
 import { getHealth } from '@/lib/api';
+import { BottomSheet } from '@/components/ui';
 
 const NAV_ITEMS = [
   { href: '/', label: 'Scraper', icon: Link2 },
@@ -64,8 +65,12 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/95 backdrop-blur supports-backdrop-filter:bg-white/80 dark:border-zinc-800 dark:bg-zinc-950/95">
       <div className="container flex h-14 items-center justify-between gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 dark:bg-zinc-100">
+        <Link
+          href="/"
+          className="flex items-center gap-2 shrink-0 group touch-manipulation"
+          onClick={closeMenu}
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-900 dark:bg-zinc-100 transition-all duration-200 group-hover:scale-105 group-active:scale-95 shadow-sm">
             <Link2 className="h-4 w-4 text-white dark:text-zinc-900" />
           </div>
         </Link>
@@ -77,10 +82,10 @@ export function Header() {
               key={href}
               href={href}
               className={cn(
-                'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                'relative flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200',
                 pathname === href
-                  ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50'
-                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800/50'
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm'
+                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800'
               )}
             >
               <Icon className="h-4 w-4" />
@@ -98,38 +103,66 @@ export function Header() {
         <div className="flex md:hidden items-center gap-2">
           <ApiStatusIndicator compact />
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-            aria-label="Toggle menu"
+            onClick={() => setMobileMenuOpen(true)}
+            className="p-2.5 rounded-xl text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 active:scale-95 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800 transition-all duration-200 touch-manipulation"
+            aria-label="Open menu"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Menu className="h-5 w-5" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-          <nav className="container py-3 space-y-1">
-            {NAV_ITEMS.map(({ href, label, icon: Icon }) => (
+      {/* Mobile Navigation Bottom Sheet */}
+      <BottomSheet isOpen={mobileMenuOpen} onClose={closeMenu} title="Navigation">
+        <nav className="px-4 py-6 space-y-2">
+          {NAV_ITEMS.map(({ href, label, icon: Icon }, index) => {
+            const isActive = pathname === href;
+            return (
               <Link
                 key={href}
                 href={href}
                 onClick={closeMenu}
                 className={cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                  pathname === href
-                    ? 'bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50'
-                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 dark:text-zinc-400 dark:hover:text-zinc-50 dark:hover:bg-zinc-800/50'
+                  'flex items-center gap-4 rounded-2xl px-4 py-4 text-base font-medium transition-all duration-200 touch-manipulation',
+                  isActive
+                    ? 'bg-zinc-200 text-black dark:bg-zinc-100 dark:text-zinc-900 shadow-none'
+                    : 'text-zinc-700 active:bg-zinc-100 active:scale-[0.98] dark:text-zinc-300 dark:active:bg-zinc-800'
                 )}
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                  animation: mobileMenuOpen ? 'slideInUp 300ms ease-out forwards' : 'none'
+                }}
               >
-                <Icon className="h-5 w-5" />
-                <span>{label}</span>
+                <div className={cn(
+                  'flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-200',
+                  isActive
+                    ? 'bg-white/20 dark:bg-zinc-900/20'
+                    : 'bg-zinc-100 dark:bg-zinc-800'
+                )}>
+                  <Icon className="h-5 w-5" />
+                </div>
+                <span className="flex-1">{label}</span>
+                {isActive && (
+                  <div className="w-2 h-2 rounded-full bg-white dark:bg-zinc-900" />
+                )}
               </Link>
-            ))}
-          </nav>
+            );
+          })}
+        </nav>
+
+        {/* Divider */}
+        <div className="mx-4 h-px bg-zinc-200 dark:bg-zinc-800" />
+
+        {/* API Status in Bottom Sheet */}
+        <div className="px-4 py-6">
+          <div className="flex items-center justify-between p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700">
+            <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              API Status
+            </span>
+            <ApiStatusIndicator />
+          </div>
         </div>
-      )}
+      </BottomSheet>
     </header>
   );
 }
