@@ -108,14 +108,14 @@ function BookmarkCard({
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-2 mt-4">
+        <div className="flex flex-col sm:flex-row gap-3 mt-4">
           <Button
             onClick={onRemove}
             variant="destructive"
             size="lg"
-            className="flex-1"
+            className="w-full sm:flex-1"
           >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-5 w-5" />
             Remove
           </Button>
 
@@ -124,7 +124,7 @@ function BookmarkCard({
             disabled={webhookState === 'loading'}
             variant="secondary"
             size="lg"
-            className={`flex-1 ${
+            className={`w-full sm:flex-1 ${
               webhookState === 'success'
                 ? '!bg-green-100 !text-green-700 dark:!bg-green-900/30 dark:!text-green-400'
                 : webhookState === 'error'
@@ -134,19 +134,19 @@ function BookmarkCard({
           >
             {webhookState === 'loading' ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-5 w-5 animate-spin" />
                 Sending...
               </>
             ) : webhookState === 'success' ? (
               <>
-                <Check className="h-4 w-4" />
+                <Check className="h-5 w-5" />
                 Sent!
               </>
             ) : webhookState === 'error' ? (
               'Error'
             ) : (
               <>
-                <Send className="h-4 w-4" />
+                <Send className="h-5 w-5" />
                 Webhook
               </>
             )}

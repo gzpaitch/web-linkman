@@ -30,7 +30,7 @@ function PlaceCard({ place, isBookmarked, onToggleBookmark }: PlaceCardProps) {
 
   const sendToWebhook = async () => {
     setWebhookState('loading');
-    
+
     const result = await sendLinkPlacesWebhook({
       cid: place.cid,
       title: place.title,
@@ -58,7 +58,7 @@ function PlaceCard({ place, isBookmarked, onToggleBookmark }: PlaceCardProps) {
       <div className="p-4 sm:p-5">
         {/* Title & Category */}
         <div className="mb-4 min-w-0">
-          <h3 className="font-medium text-zinc-900 dark:text-zinc-100 text-base sm:text-lg break-words">
+          <h3 className="font-medium text-zinc-900 dark:text-zinc-100 text-base sm:text-lg wrap-break-word">
             {place.title}
           </h3>
           {place.category && (
@@ -70,16 +70,16 @@ function PlaceCard({ place, isBookmarked, onToggleBookmark }: PlaceCardProps) {
         <div className="space-y-2.5 mb-5">
           <div className="flex items-start gap-2 sm:gap-3 min-w-0">
             <MapPin className="h-4 w-4 text-zinc-400 mt-0.5 shrink-0" />
-            <span className="text-zinc-600 dark:text-zinc-400 break-words min-w-0 text-sm sm:text-base">{place.address}</span>
+            <span className="text-zinc-600 dark:text-zinc-400 wrap-break-word min-w-0 text-sm sm:text-base">{place.address}</span>
           </div>
-          
+
           {place.phoneNumber && (
             <div className="flex items-center gap-2 sm:gap-3">
               <Phone className="h-4 w-4 text-zinc-400 shrink-0" />
               <span className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base">{place.phoneNumber}</span>
             </div>
           )}
-          
+
           {place.rating && (
             <div className="flex items-center gap-2 sm:gap-3">
               <Star className="h-4 w-4 text-zinc-400 shrink-0" />
@@ -113,14 +113,14 @@ function PlaceCard({ place, isBookmarked, onToggleBookmark }: PlaceCardProps) {
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-2 mt-4">
+        <div className="flex flex-col sm:flex-row gap-3 mt-4">
           <Button
             onClick={onToggleBookmark}
             variant={isBookmarked ? 'default' : 'secondary'}
             size="lg"
-            className="flex-1"
+            className="w-full sm:flex-1"
           >
-            <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-current' : ''}`} />
+            <Bookmark className={`h-5 w-5 ${isBookmarked ? 'fill-current' : ''}`} />
             {isBookmarked ? 'Saved' : 'Save'}
           </Button>
 
@@ -129,7 +129,7 @@ function PlaceCard({ place, isBookmarked, onToggleBookmark }: PlaceCardProps) {
             disabled={webhookState === 'loading'}
             variant="secondary"
             size="lg"
-            className={`flex-1 ${
+            className={`w-full sm:flex-1 ${
               webhookState === 'success'
                 ? '!bg-green-100 !text-green-700 dark:!bg-green-900/30 dark:!text-green-400'
                 : webhookState === 'error'
@@ -139,19 +139,19 @@ function PlaceCard({ place, isBookmarked, onToggleBookmark }: PlaceCardProps) {
           >
             {webhookState === 'loading' ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <Loader2 className="h-5 w-5 animate-spin" />
                 Sending...
               </>
             ) : webhookState === 'success' ? (
               <>
-                <Check className="h-4 w-4" />
+                <Check className="h-5 w-5" />
                 Sent!
               </>
             ) : webhookState === 'error' ? (
               'Error'
             ) : (
               <>
-                <Send className="h-4 w-4" />
+                <Send className="h-5 w-5" />
                 Webhook
               </>
             )}
@@ -185,8 +185,8 @@ export function SerperPlacesResults({ places }: SerperPlacesResultsProps) {
           </h3>
           <div className="grid gap-4">
             {withWebsite.map((place) => (
-              <PlaceCard 
-                key={place.cid} 
+              <PlaceCard
+                key={place.cid}
                 place={place}
                 isBookmarked={isBookmarked(place.cid)}
                 onToggleBookmark={() => toggleBookmark(place)}
@@ -203,8 +203,8 @@ export function SerperPlacesResults({ places }: SerperPlacesResultsProps) {
           </h3>
           <div className="grid gap-4 opacity-40">
             {withoutWebsite.map((place) => (
-              <PlaceCard 
-                key={place.cid} 
+              <PlaceCard
+                key={place.cid}
                 place={place}
                 isBookmarked={isBookmarked(place.cid)}
                 onToggleBookmark={() => toggleBookmark(place)}
